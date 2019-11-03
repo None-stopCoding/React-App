@@ -30,3 +30,4 @@
 
     - Установка зависимостей: npm init
     - Запуск dev-сервера: npm start
+    - localhost:3000
