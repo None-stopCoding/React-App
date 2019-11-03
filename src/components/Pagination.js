@@ -15,7 +15,7 @@ const Pagination = ({ currentPage, pagesAmount, moveLeft, moveRight, moveToPage 
         <div className="pagination">
             { currentPage > 1 && <LeftArrow moveLeft={() => moveLeft()}/> }
             <Pages currentPage={ currentPage }
-                   total={ Array.from(Array(pagesAmount).keys()) }
+                   total={ Array.from(Array(pagesAmount).keys()) }  // массив номеров страниц
                    moveToPage={ moveToPage }/>
             { currentPage < pagesAmount && <RightArrow moveRight={() => moveRight(pagesAmount)}/> }
         </div>
@@ -52,8 +52,8 @@ const Pages = ({ currentPage, total, moveToPage }) => {
     return (
         <div>
             {
-                total.map((page, index) =>
-                    <a key={index}
+                total.map( (page, index) =>
+                    <a key={ index }
                        href="#"
                        id={ (page + 1) === currentPage ? "active": ""}
                        onClick={ () => moveToPage(page + 1) }>

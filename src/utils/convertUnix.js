@@ -1,3 +1,8 @@
+/**
+ * Конвертация врменной метки в отформатированый вывод даты
+ * @param unixTimestamp
+ * @returns {string}
+ */
 const convertUnix = unixTimestamp => {
     let months_arr = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
     let date = new Date(unixTimestamp);

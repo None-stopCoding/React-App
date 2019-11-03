@@ -11,6 +11,22 @@ import Form from "./Form";
 import { settings } from "./../config";
 import "./../styles.css";
 
+/**
+ * Основной компонент
+ * this.state
+ *      - books - основной массив объектов книг
+ *      - formDisabled - индикатор отображаемости формы
+ *      - editBook - объект книги редактируемой на данный момент (в режимах добавления/редактирования)
+ *      - sortStatus - объект сттаусов сортировки для выбранных значений; выглядит так:
+ *          {
+ *              year: -1,
+ *              addDate: 0,
+ *              editDate: 1
+ *          } - пример (-1 - сортировка по убыванию, 1 - повзрастанию, 0 - нет сортировки)
+*       - alertMessage - сообщение о невалидности введенных данных при редактировании/добавлении книги
+ *      - searchValue - значение, введенной в строке поиска для фильтрации отображаемых книг
+ *      - currentPage - номер текущей страницы для пагинации
+ */
 class App extends Component {
     constructor(props){
         super(props);
@@ -39,12 +55,19 @@ class App extends Component {
         this.moveToPage = this.moveToPage.bind(this);
     }
 
+    /**
+     * При нажатии на кнопку "Добавить книгу" появляется форма
+     */
     addBook() {
         this.setState({
             formDisabled: false
         });
     }
 
+    /**
+     * При нажатии на кнопку "Отменить" форма пропадает, как и все сообщения об ошибках
+     *  временные введенные значения стираются
+     */
     cancelEdit() {
         this.setState({
             alertMessage: '',
@@ -53,6 +76,13 @@ class App extends Component {
         })
     }
 
+    /**
+     * При сохранении книги проверка введенных данных - если необходимо вывод сообщения об ошибке
+     * Если у объекта временной книги есть id - значит книга уже в списке, и ее редактировали
+     *  иначе ее добавляют
+     * При нажатии на кнопку "Сохранить" форма пропадает, как и все сообщения об ошибках
+     *  временные введенные значения стираются, таблица с книгами обновляется
+     */
     saveBook() {
         const { editBook, books, formDisabled } = this.state;
         if (!editBook.name || !editBook.author) {
@@ -88,6 +118,12 @@ class App extends Component {
         });
     }
 
+    /**
+     * Кнопка "Редактировать" некликабельна, если отображена форма редактирования
+     * При нажатии на кнопку "Редактировать" появляется форма,
+     *  объект временной книги получает соответствующие значения из таблицы
+     * @param index
+     */
     editBook(index) {
         const { books, formDisabled } = this.state,
             book = books[index];
@@ -108,6 +144,11 @@ class App extends Component {
         })
     }
 
+    /**
+     * Кнопка "Удалить" некликабельна, если отображена форма редактирования
+     * При нажатии на кнопку "Удалить" запись о книге пропадает из таблицы
+     * @param index
+     */
     deleteBook(index) {
         const { books, formDisabled } = this.state,
             data = books.slice();
@@ -122,6 +163,11 @@ class App extends Component {
         });
     }
 
+    /**
+     * Валидируем введенные на данный момент значения
+     *  и добавляем если все норм в объект временной книги
+     * @param event
+     */
     handleChangeForm(event) {
         const { editBook } = this.state,
             key = event.target.name;
@@ -144,6 +190,13 @@ class App extends Component {
         });
     }
 
+    /**
+     * При запросе на сортировку
+     *  если поле присутствует в объекте статусов сортировки, то добавит удалить его,
+     *      и снова добавить с измененным стаутсом (так по этому полю мы сортируемся в последнюю очередь)
+     *  иначе просто добавить
+     * @param key
+     */
     handleSortRequest(key) {
         const { sortStatus } = this.state,
             sortVals = settings.sortValues;
@@ -162,7 +215,7 @@ class App extends Component {
     handleSearchRequest(event) {
         this.setState({searchValue: event.target.value});
     }
-
+    
     moveLeft() {
         const { currentPage } = this.state;
         if (currentPage > 1) {

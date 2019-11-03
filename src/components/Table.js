@@ -65,6 +65,15 @@ const Table = ({ data, sortStatus, currentPage, handleSortRequest,
     )
 };
 
+/**
+ * Компонет заголовка
+ *  если по полю можно сортироваться
+ *      то взавизимости от направления сортировки отобразить стрелки
+ * @param sortStatus
+ * @param handleClick
+ * @returns {*}
+ * @constructor
+ */
 const Header = ({ sortStatus, handleClick }) => {
     return (
         <tr className="row">
@@ -90,6 +99,14 @@ const Header = ({ sortStatus, handleClick }) => {
     )
 };
 
+/**
+ * Строка записи о книге в таблице
+ * @param book
+ * @param deleteBook
+ * @param editBook
+ * @returns {*}
+ * @constructor
+ */
 const Row = ({ book, deleteBook, editBook }) => {
     const { id, name, author, year, addDate, editDate } = book;
     return (
@@ -106,9 +123,22 @@ const Row = ({ book, deleteBook, editBook }) => {
     )
 };
 
+/**
+ * Одно из значение объекта 'книга'
+ * @param data
+ * @param className
+ * @returns {*}
+ * @constructor
+ */
 const Cell = ({ data, className }) =>
     <td className={className || ''}>{ data }</td>;
 
+/**
+ * занчение типа DateTime объекта 'книга'
+ * @param timestamp
+ * @returns {*}
+ * @constructor
+ */
 const DateCell = ({ timestamp }) =>
     <td className="center_data">{ timestamp && convertUnix(+timestamp) }</td>;
 
