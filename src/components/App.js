@@ -1,13 +1,8 @@
 import React, { Component } from 'react';
 import { hot } from "react-hot-loader";
 
-import yearValidator from "./../utils/yearValidator";
-import Book from "./../utils/book";
-import sort from "./../utils/sort";
-import search from "./../utils/search";
-
-import Table from "./Table";
-import Form from "./Form";
+import { Table, Form } from "./rules";
+import { sort, search, validateYear, Book } from "./../utils/rules";
 import { settings } from "./../config";
 import "./../styles.css";
 
@@ -174,7 +169,7 @@ class App extends Component {
         let value = event.target.value;
 
         if (key === 'year') {
-            value = yearValidator(editBook[key], value);
+            value = validateYear(editBook[key], value);
         } else if (key in editBook) {
             if (value.length > settings.inputTextMaxSize) {
                 value = editBook[key];
@@ -215,7 +210,7 @@ class App extends Component {
     handleSearchRequest(event) {
         this.setState({searchValue: event.target.value});
     }
-    
+
     moveLeft() {
         const { currentPage } = this.state;
         if (currentPage > 1) {

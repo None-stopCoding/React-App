@@ -1,7 +1,6 @@
 import React from "react";
-import Pagination from "./Pagination";
-import paginate from "./../utils/paginate";
-import convertUnix from "./../utils/convertUnix";
+import { Pagination } from "./rules";
+import { paginate, convertUnix } from "./../utils/rules";
 import { settings } from "./../config";
 
 /**
