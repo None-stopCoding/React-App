@@ -108,18 +108,13 @@ class App extends Component {
         })
     }
 
-    deleteBook(index, booksOnPage) {
+    deleteBook(index) {
         const { books, formDisabled } = this.state,
             data = books.slice();
         data.splice(index, 1);
 
         if (!formDisabled) {
             return;
-        }
-
-        // двигаемся левее на страницу есил удалили последнюю на этой странице книгу
-        if (!(index % settings.rowsShownAtOneTime) && booksOnPage === 1) {
-            this.moveLeft();
         }
 
         this.setState({

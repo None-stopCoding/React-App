@@ -6,20 +6,25 @@ import { settings } from "./../config";
 
 const Table = ({ data, sortStatus, currentPage, handleSortRequest, deleteBook, editBook, moveLeft, moveRight, moveToPage }) => {
     const pagesAmount = Math.ceil(parseFloat((data.length/settings.rowsShownAtOneTime).toFixed(2)));
+    let currentData = paginate(data, currentPage);
+
+    while (!currentData.length && currentPage > 1) {
+        currentData = paginate(data, --currentPage);
+    }
     return (
-        (data.length > 0)
-            ?
+        <div>
+            {currentData.length > 0 ? (
                 <div>
                     <table>
                         <tbody>
                         <Header sortStatus={ sortStatus }
                                 handleClick={ handleSortRequest }/>
                         {
-                            paginate(data, currentPage).map((book, index, booksOnThisPage) => {
+                            currentData.map((book, index) => {
                                 const realIndex = (currentPage - 1) * settings.rowsShownAtOneTime + index;
                                 return <Row  key={ book.id }
                                              book={ book }
-                                             deleteBook={ () => deleteBook(realIndex, booksOnThisPage.length)}
+                                             deleteBook={ () => deleteBook(realIndex)}
                                              editBook={ () => editBook(realIndex) }/>
                             })
 
@@ -32,8 +37,10 @@ const Table = ({ data, sortStatus, currentPage, handleSortRequest, deleteBook, e
                                 moveRight={ moveRight }
                                 moveToPage={ moveToPage }/>
                 </div>
-            :
-        <h1 style={ {clear: "left"} }>Книг нет.</h1>
+            ) : (
+                <h1 style={ {clear: "left"} }>Книг нет.</h1>
+            )}
+        </div>
     )
 };
 
