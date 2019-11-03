@@ -9,4 +9,4 @@ const Book = ({ name, author, year }) => {
     }
 };
 
-export default { Book };
+export default Book;

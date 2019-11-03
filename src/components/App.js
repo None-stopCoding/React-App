@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
 import { hot } from "react-hot-loader";
 
-import { Table, Form, Book, sort, search, validateYear } from "./../rules";
-import { settings } from "../config";
+import yearValidator from "./../utils/yearValidator";
+import Book from "./../utils/book";
+import sort from "./../utils/sort";
+import search from "./../utils/search";
+
+import Table from "./Table";
+import Form from "./Form";
+import { settings } from "./../config";
 import "./../styles.css";
 
 class App extends Component {
@@ -11,7 +17,6 @@ class App extends Component {
 
         let doesNeedSortKeys = {};
         settings.header.sortKeys.forEach(key => doesNeedSortKeys[key] = 0);
-        console.log(search.search(['s', 's']));
         this.state = {
             books: JSON.parse(data),
             formDisabled: true,
@@ -128,7 +133,7 @@ class App extends Component {
         let value = event.target.value;
 
         if (key === 'year') {
-            value = validateYear(editBook[key], value);
+            value = yearValidator(editBook[key], value);
         } else if (editBook.hasOwnProperty(key)) {
             if (value.length > settings.inputTextMaxSize) {
                 value = editBook[key];
@@ -192,20 +197,17 @@ class App extends Component {
         return (
             <div>
                 <div className="show_hide_form">
-                    {
-                        formDisabled &&
+                    {formDisabled ? (
                         <button className="add_save_book"
                                 onClick={addBook}>Добавить книгу</button>
-                    }
-                    {
-                        !formDisabled &&
+                    ) : (
                         <div className="save_cancel">
                             <button className="add_save_book"
                                     onClick={saveBook}>Сохранить</button>
                             <button className="add_save_book"
                                     onClick={cancelEdit}>Отменить</button>
                         </div>
-                    }
+                    )}
                     <Form disabled={formDisabled}
                           handleChange={handleChangeForm}
                           book={editBook}/>
@@ -217,7 +219,7 @@ class App extends Component {
                        placeholder="Поиск по книге и по автору..."
                        onChange={handleSearchRequest}/>
 
-                <Table data={sort(search.search(books, searchValue.toLowerCase()), sortStatus)}
+                <Table data={sort(search(books, searchValue.toLowerCase()), sortStatus)}
                        deleteBook={deleteBook}
                        editBook={this.editBook}
                        handleSortRequest={handleSortRequest}

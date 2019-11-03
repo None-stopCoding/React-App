@@ -1,21 +1,22 @@
 import React from "react";
-import { hot } from "react-hot-loader";
 
 const Pagination = ({ currentPage, pagesAmount, moveLeft, moveRight, moveToPage }) => {
     return (
         <div className="pagination">
-            {currentPage > 1 && <LeftArrow moveLeft={() => moveLeft()}/>}
+            { currentPage > 1 && <LeftArrow moveLeft={() => moveLeft()}/> }
             <Pages currentPage={ currentPage }
                    total={ Array.from(Array(pagesAmount).keys()) }
-                   moveToPage={moveToPage}/>
-            {currentPage < pagesAmount && <RightArrow moveRight={() => moveRight(pagesAmount)}/>}
+                   moveToPage={ moveToPage }/>
+            { currentPage < pagesAmount && <RightArrow moveRight={() => moveRight(pagesAmount)}/> }
         </div>
     )
 };
 
-const LeftArrow = ({ moveLeft }) => <a href="#" onClick={ moveLeft }>❮</a>;
+const LeftArrow = ({ moveLeft }) =>
+    <a href="#" onClick={ moveLeft }>❮</a>;
 
-const RightArrow = ({ moveRight }) => <a href="#" onClick={ moveRight }>❯</a>;
+const RightArrow = ({ moveRight }) =>
+    <a href="#" onClick={ moveRight }>❯</a>;
 
 const Pages = ({ currentPage, total, moveToPage }) => {
     return (
@@ -25,7 +26,7 @@ const Pages = ({ currentPage, total, moveToPage }) => {
                     <a key={index}
                        href="#"
                        id={(page + 1) === currentPage ? "active": ""}
-                       onClick={() => moveToPage(page + 1)}>
+                       onClick={ () => moveToPage(page + 1) }>
 
                         {page + 1}
                     </a>
@@ -35,4 +36,4 @@ const Pages = ({ currentPage, total, moveToPage }) => {
     )
 };
 
-export default hot(module)(Pagination);
+export default Pagination;

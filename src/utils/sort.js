@@ -1,3 +1,4 @@
+// TODO  переписать чтоб работало
 const sort = (books, sortStatus) => {
     let data = books.slice();
     Object.entries(sortStatus).forEach(([key, value]) => {
@@ -12,4 +13,4 @@ const sort = (books, sortStatus) => {
     return data;
 };
 
-export default { sort };
+export default sort;

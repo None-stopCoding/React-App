@@ -1,6 +1,4 @@
 import React from "react";
-import { hot } from "react-hot-loader";
-import "../../styles.css";
 
 const Form = ({ disabled, handleChange, book }) => {
     return (
@@ -13,4 +11,4 @@ const Form = ({ disabled, handleChange, book }) => {
     )
 };
 
-export default hot(module)(Form);
+export default Form;

@@ -23,4 +23,4 @@ const validateYear = (prevValue, value) => {
     return value.trim();
 };
 
-export default { validateYear };
+export default validateYear;

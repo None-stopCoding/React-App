@@ -10,4 +10,4 @@ const convertUnix = unixTimestamp => {
     return month+'-'+day+'-'+year+' '+hours + ':' + minutes.substr(-2) + ':' + seconds.substr(-2);
 };
 
-export default { convertUnix };
+export default convertUnix;
