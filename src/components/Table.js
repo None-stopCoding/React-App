@@ -4,10 +4,30 @@ import paginate from "./../utils/paginate";
 import convertUnix from "./../utils/convertUnix";
 import { settings } from "./../config";
 
-const Table = ({ data, sortStatus, currentPage, handleSortRequest, deleteBook, editBook, moveLeft, moveRight, moveToPage }) => {
+/**
+ * Основная таблица
+ * @param data
+ * @param needSort
+ * @param canSort
+ * @param currentPage
+ * @param handleSortRequest
+ * @param deleteBook
+ * @param editBook
+ * @param moveLeft
+ * @param moveRight
+ * @param moveToPage
+ * @returns {*}
+ * @constructor
+ */
+const Table = ({ data, sortStatus, currentPage, handleSortRequest,
+                   deleteBook, editBook, moveLeft, moveRight, moveToPage }) => {
+    // количество страниц для пагинации
     const pagesAmount = Math.ceil(parseFloat((data.length/settings.rowsShownAtOneTime).toFixed(2)));
+    // массив отображаемых данных на текущей странице
     let currentData = paginate(data, currentPage);
 
+    // пока предыдущая страница существует и
+    //      на текущей странице данных нет - перейти на предыдущую страницу
     while (!currentData.length && currentPage > 1) {
         currentData = paginate(data, --currentPage);
     }
@@ -21,6 +41,7 @@ const Table = ({ data, sortStatus, currentPage, handleSortRequest, deleteBook, e
                                 handleClick={ handleSortRequest }/>
                         {
                             currentData.map((book, index) => {
+                                // индекс строки в массиве всех книг
                                 const realIndex = (currentPage - 1) * settings.rowsShownAtOneTime + index;
                                 return <Row  key={ book.id }
                                              book={ book }
@@ -73,8 +94,8 @@ const Row = ({ book, deleteBook, editBook }) => {
     const { id, name, author, year, addDate, editDate } = book;
     return (
         <tr>
-            <td className="remove_edit" onClick={deleteBook}><img src="./img/remove.jpg" alt="Remove"/></td>
-            <td className="remove_edit" onClick={editBook}><img src="./img/edit.png" alt="Edit"/></td>
+            <td className="remove_edit" onClick={ deleteBook }><img src="./img/remove.jpg" alt="Remove"/></td>
+            <td className="remove_edit" onClick={ editBook }><img src="./img/edit.png" alt="Edit"/></td>
             <Cell data={ id } className="center_data"/>
             <Cell data={ name }/>
             <Cell data={ author }/>
@@ -85,8 +106,10 @@ const Row = ({ book, deleteBook, editBook }) => {
     )
 };
 
-const Cell = ({ data, className }) => <td className={className || ''}>{ data }</td>;
+const Cell = ({ data, className }) =>
+    <td className={className || ''}>{ data }</td>;
 
-const DateCell = ({ timestamp }) => <td className="center_data">{ timestamp && convertUnix(+timestamp) }</td>;
+const DateCell = ({ timestamp }) =>
+    <td className="center_data">{ timestamp && convertUnix(+timestamp) }</td>;
 
 export default Table;

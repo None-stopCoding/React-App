@@ -129,7 +129,7 @@ class App extends Component {
 
         if (key === 'year') {
             value = yearValidator(editBook[key], value);
-        } else if (editBook.hasOwnProperty(key)) {
+        } else if (key in editBook) {
             if (value.length > settings.inputTextMaxSize) {
                 value = editBook[key];
             }
@@ -146,10 +146,13 @@ class App extends Component {
 
     handleSortRequest(key) {
         const { sortStatus } = this.state,
-            sortVals = settings.sortValues,
-            newSortStatus = Object.assign(sortStatus, {
-                [key]: sortVals[(sortVals.indexOf(sortStatus[key]) + 1) % sortVals.length]
-            });
+            sortVals = settings.sortValues;
+        let newSortStatus = Object.assign({}, sortStatus);
+
+        if (key in sortStatus) {
+            delete newSortStatus[key];
+        }
+        newSortStatus[key] = sortVals[(sortVals.indexOf(sortStatus[key]) + 1) % sortVals.length];
 
         this.setState({
             sortStatus: newSortStatus

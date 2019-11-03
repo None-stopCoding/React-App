@@ -1,5 +1,15 @@
 import React from "react";
 
+/**
+ * Компонент пагинации
+ * @param currentPage
+ * @param pagesAmount
+ * @param moveLeft
+ * @param moveRight
+ * @param moveToPage
+ * @returns {*}
+ * @constructor
+ */
 const Pagination = ({ currentPage, pagesAmount, moveLeft, moveRight, moveToPage }) => {
     return (
         <div className="pagination">
@@ -12,12 +22,32 @@ const Pagination = ({ currentPage, pagesAmount, moveLeft, moveRight, moveToPage 
     )
 };
 
+/**
+ * Левая стрелка
+ * @param moveLeft
+ * @returns {*}
+ * @constructor
+ */
 const LeftArrow = ({ moveLeft }) =>
     <a href="#" onClick={ moveLeft }>❮</a>;
 
+/**
+ * Правая стрелка
+ * @param moveRight
+ * @returns {*}
+ * @constructor
+ */
 const RightArrow = ({ moveRight }) =>
     <a href="#" onClick={ moveRight }>❯</a>;
 
+/**
+ * Номера страниц
+ * @param currentPage
+ * @param total
+ * @param moveToPage
+ * @returns {*}
+ * @constructor
+ */
 const Pages = ({ currentPage, total, moveToPage }) => {
     return (
         <div>
@@ -25,10 +55,10 @@ const Pages = ({ currentPage, total, moveToPage }) => {
                 total.map((page, index) =>
                     <a key={index}
                        href="#"
-                       id={(page + 1) === currentPage ? "active": ""}
+                       id={ (page + 1) === currentPage ? "active": ""}
                        onClick={ () => moveToPage(page + 1) }>
 
-                        {page + 1}
+                        { page + 1 }
                     </a>
                 )
             }

@@ -1,4 +1,10 @@
 // TODO оптимизировать
+/**
+ * Валидация ввода года
+ * @param prevValue
+ * @param value
+ * @returns {*|string}
+ */
 const validateYear = (prevValue, value) => {
     let yearNow = (new Date()).getFullYear().toString();
     if (value.length > 4 ||

@@ -1,7 +1,16 @@
 import React from "react";
 
+/**
+ * Выпадающая форма
+ * @param disabled
+ * @param handleChange
+ * @param book
+ * @returns {boolean|*}
+ * @constructor
+ */
 const Form = ({ disabled, handleChange, book }) => {
     return (
+        // отобразить если статус disabled == false
         !disabled &&
             <form id="add_edit_data">
                 <input name="name" type="text" placeholder="Название книги" onChange={handleChange} value={book.name || ''}/>
