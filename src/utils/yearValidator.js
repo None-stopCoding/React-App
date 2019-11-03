@@ -1,4 +1,3 @@
-// TODO оптимизировать
 /**
  * Валидация ввода года
  * @param prevValue
@@ -7,22 +6,23 @@
  */
 const validateYear = (prevValue, value) => {
     let yearNow = (new Date()).getFullYear().toString();
+
     if (value.length > 4 ||
         isNaN(+value) ||
         (+value[0] === 0) ||
-        (value.length === 4 &&
-            value[0] === yearNow[0] &&
-            value[1] === yearNow[1] &&
-            value[2] === yearNow[2] &&
-            +value[3] > +yearNow[3]) ||
-        (value.length === 3 &&
-            value[0] === yearNow[0] &&
-            value[1] === yearNow[1] &&
-            +value[2] > +yearNow[2]) ||
-        (value.length === 2 &&
-            value[0] === yearNow[0] &&
-            +value[1] > +yearNow[1]) ||
-        (value.length === 1 && +value[0] > +yearNow[0])) {
+        (() => {
+            let iter = yearNow.length;
+            while(iter > 0) {
+                if (value.length === iter) {
+                    let index = 0;
+                    while (index < iter - 1)
+                        if (value[index] !== yearNow[index++])
+                            break;
+                    if (index === iter - 1 && +value[index] > +yearNow[index]) return true;
+                }
+                iter--;
+            }
+        })()) {
 
         return prevValue;
     }
