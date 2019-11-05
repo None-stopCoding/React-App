@@ -84,12 +84,11 @@ class App extends Component {
             this.setState({alertMessage: "Поля 'Название книги' и 'Автор' должны быть заполнены"});
             return;
         }
-        if (editBook.year &&
-            editBook.year.length < 4) {
+        if (editBook.year && editBook.year.length < 4) {
             this.setState({alertMessage: "Поле 'Год' должно содержать 4 цифры"});
             return;
         }
-        if (+editBook.year > (new Date()).getFullYear()){
+        if (+editBook.year > (new Date()).getFullYear()) {
             this.setState({alertMessage: "Введенный год больше текущего"});
             return;
         }

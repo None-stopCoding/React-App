@@ -13,13 +13,15 @@
 const sort = (books, sortKeys) => {
     let data = books.slice();
     Object.entries(sortKeys).forEach(([key, value]) => {
-        if (value !== 0)
+        if (value !== 0) {
             data.sort((book, nextBook) => {
-                if (value > 0)
+                if (value > 0) {
                     return book[key] - nextBook[key];
-                else
+                } else {
                     return nextBook[key] - book[key];
+                }
             });
+        }
     });
     return data;
 };

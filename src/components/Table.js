@@ -6,8 +6,7 @@ import { settings } from "./../config";
 /**
  * Основная таблица
  * @param data
- * @param needSort
- * @param canSort
+ * @param sortStatus
  * @param currentPage
  * @param handleSortRequest
  * @param deleteBook
